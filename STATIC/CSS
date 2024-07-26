@@ -1,0 +1,44 @@
+
+### static/css/style.css
+
+```css
+body {
+    background: #E64A19;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.stApp {
+    background: #E64A19;
+    color: white;
+}
+
+button {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 3px 3px 5px #b3b3b3, -3px -3px 5px #ffffff;
+    color: #000;
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    box-shadow: inset 3px 3px 5px #b3b3b3, inset -3px -3px 5px #ffffff;
+}
+
+input[type="text"] {
+    border: none;
+    border-radius: 15px;
+    box-shadow: inset 3px 3px 5px #b3b3b3, inset -3px -3px 5px #ffffff;
+    padding: 10px;
+    width: 100%;
+}
+
+.stImage {
+    border-radius: 15px;
+    box-shadow: 3px 3px 5px #b3b3b3, -3px -3px 5px #ffffff;
+}
