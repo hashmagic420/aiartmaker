@@ -11,7 +11,7 @@ def load_css(file_name):
         st.error(f"CSS file '{file_name}' not found. Please ensure the file is in the correct directory.")
 
 # Load CSS
-css_path = 'style.css'
+css_path = 'style.css'  # Adjusted path based on provided structure
 load_css(css_path)
 
 # Function to create the AI Art Maker interface
