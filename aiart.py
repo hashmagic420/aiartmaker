@@ -2,52 +2,40 @@ import streamlit as st
 import requests
 import os
 
-# Path to static assets
-css_path = os.path.join(os.path.dirname(__file__), 'static', 'css', 'style.css')
-js_path = os.path.join(os.path.dirname(__file__), 'static', 'js', 'main.js')
+# Function to load CSS file
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Load CSS
-with open(css_path) as f:
-    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+css_path = os.path.join('static', 'css', 'style.css')
+load_css(css_path)
 
-# Load JS
-with open(js_path) as f:
-    st.markdown(f'<script>{f.read()}</script>', unsafe_allow_html=True)
+# Function to create the AI Art Maker interface
+def ai_art_maker():
+    st.title("AI Art Maker")
+    st.markdown("This app allows you to create AI-generated art. Enter a description and click 'Generate Art' to get started.")
 
-# Streamlit app configuration
-st.set_page_config(page_title="AI Art Maker", layout="wide")
+    description = st.text_input("Enter a description for the AI art:")
+    if st.button("Generate Art"):
+        if description:
+            st.write("Generating art...")
+            # Call the API with the description
+            response = requests.get(
+                "https://yt-api.p.rapidapi.com/dl",
+                headers={
+                    "X-Rapidapi-Key": "10b8ea539emsh303325ea16a546ep175db6jsn340dbef4f66a",
+                    "X-Rapidapi-Host": "yt-api.p.rapidapi.com",
+                },
+                params={"id": description}
+            )
 
-# Title and description
-st.title("AI Art Maker")
-st.write("Enter a prompt to generate AI art. This app uses the RapidAPI for generating art based on your prompt.")
-
-# Input prompt from the user
-prompt = st.text_input("Enter your art prompt:", "A beautiful sunset over the mountains")
-
-# API details
-api_url = "https://yt-api.p.rapidapi.com/dl"
-headers = {
-    "X-Rapidapi-Key": "10b8ea539emsh303325ea16a546ep175db6jsn340dbef4f66a",
-    "X-Rapidapi-Host": "yt-api.p.rapidapi.com"
-}
-
-# Function to call the API and generate art
-def generate_art(prompt):
-    response = requests.get(api_url, headers=headers, params={"id": prompt})
-    if response.status_code == 200:
-        return response.content
-    else:
-        st.error(f"Error: {response.status_code} - {response.text}")
-        return None
-
-# Generate art button
-if st.button("Generate Art"):
-    with st.spinner("Generating art..."):
-        art = generate_art(prompt)
-        if art:
-            st.image(art, caption="Generated Art", use_column_width=True)
+            if response.status_code == 200:
+                st.image(response.json().get('url'))
+            else:
+                st.error("Error generating art. Please try again.")
         else:
-            st.error("Failed to generate art. Please try again.")
+            st.warning("Please enter a description.")
 
-# Footer
-st.write("Powered by [RapidAPI](https://rapidapi.com/).")
+if __name__ == "__main__":
+    ai_art_maker()
