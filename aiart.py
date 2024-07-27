@@ -4,11 +4,14 @@ import os
 
 # Function to load CSS file
 def load_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    if os.path.exists(file_name):
+        with open(file_name) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    else:
+        st.error(f"CSS file '{file_name}' not found. Please ensure the file is in the correct directory.")
 
 # Load CSS
-css_path = os.path.join('static', 'css', 'style.css')
+css_path = 'style.css'
 load_css(css_path)
 
 # Function to create the AI Art Maker interface
